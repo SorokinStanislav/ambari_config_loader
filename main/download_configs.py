@@ -1,27 +1,21 @@
 import urllib.request as urllib2
 
 
-def get_url(elem, ambari_url):
-    parsed_ambari_url = urllib2.urlparse(ambari_url)
-    if parsed_ambari_url.scheme == '':
-        scheme = 'http'
-        host_and_port = parsed_ambari_url.path
-    else:
-        scheme = parsed_ambari_url.scheme
-        host_and_port = parsed_ambari_url.netloc
-    return scheme + '://' + host_and_port + '/api/v1/clusters/HDP/services/' + elem + \
-        '/components/' + elem + '_CLIENT?format=client_config_tar'
+def get_url(elem, ambari):
+
+    return ambari.scheme + '://' + ambari.host_and_port + '/api/v1/clusters/' + ambari.cluster + \
+           '/services/' + elem + '/components/' + elem + '_CLIENT?format=client_config_tar'
 
 
 def get_file_name(elem):
     return 'downloaded/' + elem + '.tar.gz'
 
 
-def download(config, ambari_url, credentials):
-    url = get_url(config, ambari_url)
+def download(config, ambari):
+    url = get_url(config, ambari)
 
     password_manager = urllib2.HTTPPasswordMgrWithPriorAuth()
-    password_manager.add_password(None, url, credentials.username, credentials.password, is_authenticated=True)
+    password_manager.add_password(None, url, ambari.credentials.username, ambari.credentials.password, is_authenticated=True)
     auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)
     opener = urllib2.build_opener(auth_manager)
 
