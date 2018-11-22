@@ -1,8 +1,5 @@
 import urllib.request as urllib2
 
-user = 'admin'
-password = 'admin'
-
 
 def get_url(elem, ambari_url):
     parsed_ambari_url = urllib2.urlparse(ambari_url)
@@ -20,11 +17,11 @@ def get_file_name(elem):
     return 'downloaded/' + elem + '.tar.gz'
 
 
-def download(config, ambari_url):
+def download(config, ambari_url, credentials):
     url = get_url(config, ambari_url)
 
     password_manager = urllib2.HTTPPasswordMgrWithPriorAuth()
-    password_manager.add_password(None, url, user, password, is_authenticated=True)
+    password_manager.add_password(None, url, credentials.username, credentials.password, is_authenticated=True)
     auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)
     opener = urllib2.build_opener(auth_manager)
 
