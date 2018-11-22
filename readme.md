@@ -10,7 +10,7 @@ python3 get_hadoop_configs.py <target_dir> <ambari_url> <ambari_admin_login> <am
 
 ##### params:
 * target_dir - local directory path with '/' in the end where configs will be placed. 
-* ambari_url - URL of Ambari in style <scheme>://<host>:<port> or just <host>:<port>
+* ambari_url - URL of Ambari in style \<scheme>://\<host>:\<port> or just \<host>:\<port>
 * ambari_admin_login - Ambari admin login
 * ambari_admin_password - Ambari admin password
 * cluster_name - Name of Hadoop cluster
