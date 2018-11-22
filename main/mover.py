@@ -1,13 +1,12 @@
 import glob
 import shutil
 import os
-import sys
 
 extracted_folder = 'extracted/'
 downloaded_folder = 'downloaded/'
 
 
-def move():
+def move_to(target_dir):
     files = glob.glob(extracted_folder + '*site.xml')
     for file in files:
         if os.name == 'posix':
@@ -15,7 +14,7 @@ def move():
         else:
             separator = '\\'
         file_name = file.split(separator)[1]
-        shutil.move(file, sys.argv[1] + file_name)
+        shutil.move(file, target_dir + file_name)
         print(file_name + ' moved')
 
 

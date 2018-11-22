@@ -4,17 +4,24 @@ user = 'admin'
 password = 'admin'
 
 
-def get_url(elem):
-    return 'http://192.168.246.10:8080/api/v1/clusters/HDP/services/' + elem + \
-           '/components/' + elem + '_CLIENT?format=client_config_tar'
+def get_url(elem, ambari_url):
+    parsed_ambari_url = urllib2.urlparse(ambari_url)
+    if parsed_ambari_url.scheme == '':
+        scheme = 'http'
+        host_and_port = parsed_ambari_url.path
+    else:
+        scheme = parsed_ambari_url.scheme
+        host_and_port = parsed_ambari_url.netloc
+    return scheme + '://' + host_and_port + '/api/v1/clusters/HDP/services/' + elem + \
+        '/components/' + elem + '_CLIENT?format=client_config_tar'
 
 
 def get_file_name(elem):
     return 'downloaded/' + elem + '.tar.gz'
 
 
-def download(config):
-    url = get_url(config)
+def download(config, ambari_url):
+    url = get_url(config, ambari_url)
 
     password_manager = urllib2.HTTPPasswordMgrWithPriorAuth()
     password_manager.add_password(None, url, user, password, is_authenticated=True)
@@ -27,7 +34,3 @@ def download(config):
     f.close()
     print('Success load ' + config)
     return file_name
-
-
-
-
