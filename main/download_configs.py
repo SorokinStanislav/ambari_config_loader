@@ -5,7 +5,7 @@ password = 'admin'
 
 
 def get_url(elem):
-    return 'http://192.168.233.243:8080/api/v1/clusters/HDP/services/' + elem + \
+    return 'http://192.168.246.10:8080/api/v1/clusters/HDP/services/' + elem + \
            '/components/' + elem + '_CLIENT?format=client_config_tar'
 
 
